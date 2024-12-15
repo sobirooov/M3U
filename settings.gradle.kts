@@ -22,6 +22,7 @@ include(":material")
 include(":ui")
 include(
     ":feature:foryou",
+    ":feature:films",
     ":feature:favorite",
     ":feature:setting",
     ":feature:playlist",

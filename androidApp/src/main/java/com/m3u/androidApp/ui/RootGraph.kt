@@ -8,9 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.m3u.data.database.model.Playlist
 import com.m3u.feature.favorite.FavouriteRoute
+import com.m3u.feature.films.FilmsRoute
+import com.m3u.feature.films.FilmsListRoute
+import com.m3u.feature.films.navigation.FilmsNavigation
 import com.m3u.feature.foryou.ForyouRoute
 import com.m3u.feature.setting.SettingRoute
 import com.m3u.material.ktx.Edge
@@ -23,6 +27,7 @@ fun NavGraphBuilder.rootGraph(
     navigateToChannel: () -> Unit,
     navigateToSettingPlaylistManagement: () -> Unit,
     navigateToPlaylistConfiguration: (Playlist) -> Unit,
+    navController: NavHostController,
 ) {
     composable(
         route = Destination.Root.Foryou.name,
@@ -43,6 +48,27 @@ fun NavGraphBuilder.rootGraph(
                 )
         )
     }
+
+    composable(
+        route = Destination.Root.Films.name,
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() }
+    ) {
+        FilmsRoute(
+            contentPadding = contentPadding,
+            navigateToFilmList = { categoryId ->
+                navController.navigate(FilmsNavigation.filmsListRoute(categoryId))
+            },
+            modifier = Modifier
+                .fillMaxSize()
+                .blurEdge(
+                    edge = Edge.Bottom,
+                    color = MaterialTheme.colorScheme.background
+                )
+        )
+    }
+
+
     composable(
         route = Destination.Root.Favourite.name,
         enterTransition = { fadeIn() },

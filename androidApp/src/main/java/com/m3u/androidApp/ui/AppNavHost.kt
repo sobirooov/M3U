@@ -68,7 +68,8 @@ fun AppNavHost(
             },
             navigateToPlaylistConfiguration = {
                 navController.navigateToPlaylistConfiguration(it.url)
-            }
+            },
+            navController = navController
         )
         playlistScreen(
             navigateToChannel = {

@@ -5,9 +5,11 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Collections
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Movie
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.rounded.Collections
 import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Movie
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -26,6 +28,11 @@ sealed interface Destination {
             selectedIcon = Icons.Rounded.Home,
             unselectedIcon = Icons.Outlined.Home,
             iconTextId = string.ui_destination_foryou
+        ),
+        Films(
+            selectedIcon = Icons.Rounded.Movie,
+            unselectedIcon = Icons.Outlined.Movie,
+            iconTextId = string.ui_destination_films
         ),
         Favourite(
             selectedIcon = Icons.Rounded.Collections,

@@ -124,6 +124,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":ui"))
     implementation(project(":feature:foryou"))
+    implementation(project(":feature:films"))
     implementation(project(":feature:favorite"))
     implementation(project(":feature:setting"))
     implementation(project(":feature:playlist"))
@@ -158,5 +159,6 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.zxing:core:3.5.0")
 
 }
