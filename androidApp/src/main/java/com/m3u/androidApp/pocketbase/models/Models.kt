@@ -31,3 +31,7 @@ data class DeviceCreateRequest(
     @SerializedName("expires_at") val expiresAt: String,
     @SerializedName("message") val message: String
 )
+
+data class LoginResponse(
+    @SerializedName("message") val message: String
+)

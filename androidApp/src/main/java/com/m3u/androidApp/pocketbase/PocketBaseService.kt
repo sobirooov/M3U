@@ -3,9 +3,11 @@ package com.m3u.androidApp.pocketbase
 
 import com.m3u.androidApp.pocketbase.models.DeviceCreateRequest
 import com.m3u.androidApp.pocketbase.models.DeviceResponse
+import com.m3u.androidApp.pocketbase.models.LoginResponse
 import com.m3u.androidApp.pocketbase.models.SettingsResponse
 
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -21,4 +23,8 @@ interface PocketBaseService {
 
     @POST("api/collections/devices/records")
     fun createDevice(@Body newDevice: DeviceCreateRequest): Call<DeviceResponse>
+
+    // New login endpoint
+    @POST("device_login")
+    suspend fun login(@Body credentials: Map<String, String>): Response<LoginResponse>
 }

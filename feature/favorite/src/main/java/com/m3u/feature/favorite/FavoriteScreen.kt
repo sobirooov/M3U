@@ -2,6 +2,7 @@ package com.m3u.feature.favorite
 
 import android.content.res.Configuration
 import android.view.KeyEvent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
@@ -125,6 +126,7 @@ fun FavouriteRoute(
         },
         modifier = Modifier
             .fillMaxSize()
+            .background(color = Color.Transparent)
             .thenIf(!tv && preferences.godMode) {
                 Modifier.interceptVolumeEvent { event ->
                     preferences.rowCount = when (event) {

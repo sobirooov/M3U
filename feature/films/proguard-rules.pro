@@ -19,3 +19,19 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# Preserve all enums, serializable classes, and methods that use String concatenation
+-keep class java.lang.invoke.StringConcatFactory { *; }
+-dontwarn java.lang.invoke.StringConcatFactory
+
+# Prevent obfuscation of model classes
+-keep class com.m3u.feature.films.pocketbase.models.** { *; }
+
+-keep class com.google.gson.** { *; }
+-keepattributes *Annotation*
+
+-keep class com.m3u.feature.films.pocketbase.** { *; }
+-keep class retrofit2.** { *; }
+-keep class com.google.gson.** { *; }
+-keep class kotlinx.coroutines.** { *; }

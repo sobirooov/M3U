@@ -129,7 +129,7 @@ class Preferences @Inject constructor(
 
         @ClipMode
         const val DEFAULT_CLIP_MODE = ClipMode.ADAPTIVE
-        const val DEFAULT_AUTO_REFRESH_CHANNELS = false
+        const val DEFAULT_AUTO_REFRESH_CHANNELS = true
         const val DEFAULT_FULL_INFO_PLAYER = false
         const val DEFAULT_NO_PICTURE_MODE = false
         const val DEFAULT_DARK_MODE = true
@@ -157,7 +157,7 @@ class Preferences @Inject constructor(
         const val DEFAULT_RANDOMLY_IN_FAVOURITE = false
 
         const val DEFAULT_12_H_CLOCK_MODE = false
-        const val DEFAULT_COLORFUL_BACKGROUND = false
+        const val DEFAULT_COLORFUL_BACKGROUND = true
         const val DEFAULT_COMPACT_DIMENSION = false
 
         const val PLAYLIST_STRATEGY = "playlist-strategy"
