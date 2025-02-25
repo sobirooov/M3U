@@ -98,7 +98,7 @@ fun FilmsScreen(
                                             painter = rememberImagePainter(film.imageUrl),
                                             contentDescription = null,
                                             modifier = Modifier
-                                                .height(120.dp)
+                                                .height(220.dp)
                                                 .fillMaxWidth()
                                                 .clip(RoundedCornerShape(12.dp)), // Rounded corners
                                             contentScale = ContentScale.Crop
