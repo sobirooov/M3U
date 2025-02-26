@@ -9,6 +9,7 @@ import com.m3u.core.architecture.logger.sandBox
 import com.m3u.core.architecture.preferences.Preferences
 import com.m3u.data.database.dao.ChannelDao
 import com.m3u.data.database.dao.PlaylistDao
+import com.m3u.data.database.model.AdjacentChannels
 import com.m3u.data.database.model.Channel
 import com.m3u.data.database.model.isSeries
 import com.m3u.data.repository.channel.ChannelRepository.Sort
@@ -43,11 +44,22 @@ internal class ChannelRepositoryImpl @Inject constructor(
         Sort.ASC -> channelDao.pagingAllByPlaylistUrlAsc(url, category, query)
         Sort.DESC -> channelDao.pagingAllByPlaylistUrlDesc(url, category, query)
         Sort.RECENTLY -> channelDao.pagingAllByPlaylistUrlRecently(url, category, query)
+        Sort.MIXED -> channelDao.pagingAllByPlaylistUrlMixed(url, query)
     }
 
     override suspend fun get(id: Int): Channel? = logger.execute {
         channelDao.get(id)
     }
+
+    override fun observeAdjacentChannels(
+        channelId: Int,
+        playlistUrl: String,
+        category: String,
+    ): Flow<AdjacentChannels> = channelDao.observeAdjacentChannels(
+        channelId = channelId,
+        playlistUrl = playlistUrl,
+        category = category
+    )
 
     override suspend fun getRandomIgnoreSeriesAndHidden(): Channel? = logger.execute {
         val playlists = playlistDao.getAll()

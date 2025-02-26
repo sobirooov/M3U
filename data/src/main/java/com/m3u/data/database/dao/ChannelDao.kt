@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.m3u.data.database.model.AdjacentChannels
 import com.m3u.data.database.model.Channel
 import kotlinx.coroutines.flow.Flow
 
@@ -178,6 +179,18 @@ internal interface ChannelDao {
         query: String
     ): PagingSource<Int, Channel>
 
+    @Query(
+        """
+            SELECT * FROM streams 
+            WHERE playlist_url = :url
+            AND title LIKE '%'||:query||'%'
+        """
+    )
+    fun pagingAllByPlaylistUrlMixed(
+        url: String,
+        query: String
+    ): PagingSource<Int, Channel>
+
     @Query("SELECT COUNT(playlist_url) FROM streams WHERE playlist_url = :playlistUrl")
     fun observeCountByPlaylistUrl(playlistUrl: String): Flow<Int>
 
@@ -198,4 +211,33 @@ internal interface ChannelDao {
 
     @Query("UPDATE streams SET seen = :target WHERE id = :id")
     suspend fun updateSeen(id: Int, target: Long)
+
+    @Query(
+        """
+            WITH TargetChannel AS (
+                SELECT *
+                FROM streams
+                WHERE id = :channelId
+                AND playlist_url = :playlistUrl
+                AND `group` = :category
+            )
+            SELECT
+                (SELECT id FROM streams
+                 WHERE playlist_url = :playlistUrl
+                   AND `group` = :category
+                   AND title < (SELECT title FROM TargetChannel)
+                   ORDER BY title DESC LIMIT 1) AS next_id,
+                (SELECT id FROM streams
+                 WHERE playlist_url = :playlistUrl
+                   AND `group` = :category
+                   AND title > (SELECT title FROM TargetChannel)
+                   ORDER BY title ASC LIMIT 1) AS prev_id
+        """
+    )
+    fun observeAdjacentChannels(
+        channelId: Int,
+        playlistUrl: String,
+        category: String,
+    ): Flow<AdjacentChannels>
+
 }

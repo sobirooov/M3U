@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.com.android.test) apply false
     alias(libs.plugins.org.jetbrains.kotlin.serialization) apply false
     alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.androidx.baselineprofile) apply false
 }
 
 subprojects {
@@ -22,6 +23,7 @@ subprojects {
                 optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
                 optIn("androidx.compose.foundation.ExperimentalFoundationApi")
                 optIn("androidx.compose.foundation.layout.ExperimentalLayoutApi")
+                optIn("androidx.compose.animation.ExperimentalSharedTransitionApi")
                 optIn("androidx.compose.material3.ExperimentalMaterial3Api")
                 optIn("androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi")
                 optIn("androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi")
@@ -46,7 +48,7 @@ subprojects {
     }
     plugins.withId("com.android.library") {
         configure<LibraryExtension> {
-            compileSdk = 34
+            compileSdk = 35
             defaultConfig {
                 minSdk = 26
                 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -54,7 +56,7 @@ subprojects {
             }
             buildTypes {
                 release {
-                    isMinifyEnabled = true
+                    isMinifyEnabled = false
                     proguardFiles(
                         getDefaultProguardFile("proguard-android-optimize.txt"),
                         "proguard-rules.pro"

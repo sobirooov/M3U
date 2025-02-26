@@ -12,16 +12,15 @@ plugins {
 }
 android {
     namespace = "com.m3u.androidApp"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
-        applicationId = "net.tijorat.ipxtv"
+        applicationId = "com.m3u.androidApp"
         minSdk = 26
-        targetSdk = 34
-        versionCode = 11
-        versionName = "1.1.1"
+        targetSdk = 33
+        versionCode = 144
+        versionName = "1.14.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        testInstrumentationRunnerArguments["androidx.benchmark.profiling.mode"] = "MethodTracing"
     }
     flavorDimensions += setOf("channel", "codec")
     productFlavors {
@@ -51,12 +50,6 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             signingConfig = signingConfigs.getByName("debug")
-        }
-        create("benchmark") {
-            initWith(buildTypes.getByName("release"))
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks += listOf("release")
-            isDebuggable = false
         }
         all {
             isCrunchPngs = false
@@ -120,17 +113,24 @@ hilt {
     enableAggregatingTask = true
 }
 
+baselineProfile {
+    dexLayoutOptimization = true
+    saveInSrc = true
+    automaticGenerationDuringBuild = true
+}
+
 dependencies {
     implementation(project(":core"))
     implementation(project(":ui"))
     implementation(project(":feature:foryou"))
-    implementation(project(":feature:films"))
     implementation(project(":feature:favorite"))
     implementation(project(":feature:setting"))
     implementation(project(":feature:playlist"))
     implementation(project(":feature:channel"))
     implementation(project(":feature:playlist-configuration"))
     implementation(project(":feature:crash"))
+    implementation(libs.androidx.profileinstaller)
+    "baselineProfile"(project(":baselineprofile"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -155,10 +155,4 @@ dependencies {
     implementation(libs.androidx.glance.material3)
 
     debugImplementation(libs.squareup.leakcanary)
-
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("com.google.zxing:core:3.5.0")
-
 }

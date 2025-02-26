@@ -24,6 +24,7 @@ import androidx.media3.exoplayer.drm.DefaultDrmSessionManager
 import androidx.media3.exoplayer.drm.FrameworkMediaDrm
 import androidx.media3.exoplayer.drm.HttpMediaDrmCallback
 import androidx.media3.exoplayer.drm.LocalMediaDrmCallback
+import androidx.media3.exoplayer.hls.DefaultHlsExtractorFactory
 import androidx.media3.exoplayer.hls.HlsExtractorFactory
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.offline.Download
@@ -237,7 +238,7 @@ class PlayerManagerImpl @Inject constructor(
         val mediaSourceFactory = when (mimeType) {
             MimeTypes.APPLICATION_M3U8 -> HlsMediaSource.Factory(dataSourceFactory)
                 .setAllowChunklessPreparation(false)
-                .setExtractorFactory(HlsExtractorFactory.DEFAULT)
+                .setExtractorFactory(DefaultHlsExtractorFactory())
 
             MimeTypes.APPLICATION_SS -> ProgressiveMediaSource.Factory(dataSourceFactory, extractorsFactory)
             MimeTypes.APPLICATION_RTSP -> RtspMediaSource.Factory()
@@ -497,6 +498,12 @@ class PlayerManagerImpl @Inject constructor(
                 playWhenReady = true
                 prepare()
             }
+        }
+    }
+
+    override fun updateSpeed(race: Float) {
+        player.value?.apply {
+            setPlaybackSpeed(race.coerceAtLeast(0.1f))
         }
     }
 
