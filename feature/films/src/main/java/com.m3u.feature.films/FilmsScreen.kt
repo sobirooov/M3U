@@ -7,20 +7,19 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.compose.foundation.shape.RoundedCornerShape
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.m3u.feature.films.pocketbase.models.Category
 import com.m3u.feature.films.pocketbase.models.Film
 
@@ -28,6 +27,7 @@ import com.m3u.feature.films.pocketbase.models.Film
 fun FilmsRoute(
     contentPadding: PaddingValues,
     navigateToFilmList: (String) -> Unit,
+    navigateToFilmDetails: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: FilmsViewModel = hiltViewModel()
 ) {
@@ -38,7 +38,7 @@ fun FilmsRoute(
         featuredFilmsState = featuredFilmsState.value,
         categoriesState = categoriesState.value,
         onCategoryClick = navigateToFilmList,
-        onFilmClick = { /* Handle film click */ },
+        onFilmClick = navigateToFilmDetails,
         contentPadding = contentPadding,
         modifier = modifier
     )
@@ -59,7 +59,6 @@ fun FilmsScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Featured Films Section
         item {
             Text(
                 text = "Сара фильмлар",
@@ -78,29 +77,24 @@ fun FilmsScreen(
                         LazyRow(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(horizontal = 16.dp)
                         ) {
                             items(featuredFilms) { film ->
                                 Card(
                                     shape = RoundedCornerShape(12.dp),
-                                    elevation = CardDefaults.cardElevation(6.dp),
                                     modifier = Modifier
-                                        .padding(8.dp)
-                                        .clickable { onFilmClick(film.id) }
+                                        .padding(end = 16.dp)
                                         .width(160.dp)
+                                        .clickable { onFilmClick(film.id) }
                                 ) {
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .background(MaterialTheme.colorScheme.surface)
-                                    ) {
+                                    Column {
                                         Image(
-                                            painter = rememberImagePainter(film.imageUrl),
+                                            painter = rememberAsyncImagePainter(film.imageUrl),
                                             contentDescription = null,
                                             modifier = Modifier
                                                 .height(220.dp)
                                                 .fillMaxWidth()
-                                                .clip(RoundedCornerShape(12.dp)), // Rounded corners
+                                                .clip(RoundedCornerShape(12.dp)),
                                             contentScale = ContentScale.Crop
                                         )
                                         Spacer(modifier = Modifier.height(8.dp))
@@ -116,13 +110,12 @@ fun FilmsScreen(
                             }
                         }
                     } else {
-                        CenteredError(message = "No featured films available.")
+                        CenteredError(message = "Сара фильмлар мавжуд эмас.")
                     }
                 }
             }
         }
 
-        // Categories Section
         item {
             Text(
                 text = "Категориялар",
@@ -138,7 +131,6 @@ fun FilmsScreen(
                 items(categoriesState.data) { category ->
                     Card(
                         shape = RoundedCornerShape(12.dp),
-                        elevation = CardDefaults.cardElevation(4.dp),
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp, vertical = 8.dp)
@@ -147,15 +139,14 @@ fun FilmsScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.surface)
                                 .padding(16.dp)
                         ) {
                             Image(
-                                painter = rememberImagePainter(category.imageUrl),
+                                painter = rememberAsyncImagePainter(category.imageUrl),
                                 contentDescription = null,
                                 modifier = Modifier
                                     .size(80.dp)
-                                    .clip(RoundedCornerShape(8.dp)), // Rounded corners
+                                    .clip(RoundedCornerShape(8.dp)),
                                 contentScale = ContentScale.Crop
                             )
                             Spacer(modifier = Modifier.width(16.dp))
@@ -164,8 +155,7 @@ fun FilmsScreen(
                                     text = category.title,
                                     style = MaterialTheme.typography.bodyMedium,
                                     maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    color = MaterialTheme.colorScheme.onSurface
+                                    overflow = TextOverflow.Ellipsis
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
@@ -192,7 +182,7 @@ fun CenteredLoader() {
             .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        CircularProgressIndicator()
     }
 }
 
@@ -213,9 +203,9 @@ fun CenteredError(message: String, details: String? = null) {
             details?.let {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Details: $it",
+                    text = "Тафсилотлар: $it",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
                 )
             }
         }

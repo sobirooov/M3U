@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ui_title_foryou">M3U</string>
 
     <string name="ui_destination_foryou">主页</string>
     <string name="ui_destination_favourite">喜欢</string>
@@ -22,4 +21,5 @@
     <string name="ui_sort_mixed">混合</string>
     <string name="ui_sort_never_played">从未播放过</string>
     <string name="ui_sort_unspecified">默认</string>
+    <string name="ui_title_foryou">IPX TV</string>
 </resources>

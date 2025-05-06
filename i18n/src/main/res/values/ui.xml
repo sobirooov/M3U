@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ui_title_foryou">M3U</string>
-    <string name="ui_title_favourite">Favourite</string>
-    <string name="ui_title_setting">Settings</string>
+    <string name="ui_title_foryou">IPX TV</string>
+    <string name="ui_title_favourite">Tanlangan</string>
+    <string name="ui_title_setting">Sozlama</string>
 
-    <string name="ui_destination_foryou">For You</string>
-    <string name="ui_destination_favourite">Favourite</string>
-    <string name="ui_destination_setting">Settings</string>
+    <string name="ui_destination_foryou">Asosiy</string>
+    <string name="ui_destination_films">Filmlar</string>
+    <string name="ui_destination_favourite">Sevimli</string>
+    <string name="ui_destination_setting">Sozlama</string>
 
     <string name="ui_error_unknown">unknown error</string>
     <string name="ui_cd_top_bar_on_back_pressed">back</string>
@@ -22,5 +23,5 @@
     <string name="ui_sort_never_played">never played</string>
     <string name="ui_sort_unspecified">Unspecified</string>
 
-    <string name="ui_connect">Connect</string>
+    <string name="ui_connect">Ulanish</string>
 </resources>

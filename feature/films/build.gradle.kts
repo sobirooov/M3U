@@ -32,6 +32,7 @@ dependencies {
     // Hilt for Dependency Injection
     implementation(libs.google.dagger.hilt)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.foundation.android)
     ksp(libs.google.dagger.hilt.compiler)
 
     // Retrofit for API calls
@@ -48,7 +49,8 @@ dependencies {
     // WebView for embedded YouTube trailers
     implementation("androidx.webkit:webkit:1.6.0")
 
-
+    // Add YouTube Player dependency
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
 
     // Compose Material3
     implementation(libs.androidx.compose.material3)

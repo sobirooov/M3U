@@ -14,11 +14,11 @@ android {
     namespace = "com.m3u.androidApp"
     compileSdk = 35
     defaultConfig {
-        applicationId = "com.m3u.androidApp"
+        applicationId = "net.tijorat.ipxtv"
         minSdk = 26
-        targetSdk = 33
-        versionCode = 144
-        versionName = "1.14.1"
+        targetSdk = 34
+        versionCode = 12
+        versionName = "1.1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -123,6 +123,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":ui"))
     implementation(project(":feature:foryou"))
+    implementation(project(":feature:films"))
     implementation(project(":feature:favorite"))
     implementation(project(":feature:setting"))
     implementation(project(":feature:playlist"))
@@ -155,4 +156,10 @@ dependencies {
     implementation(libs.androidx.glance.material3)
 
     debugImplementation(libs.squareup.leakcanary)
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.zxing:core:3.5.0")
+
 }
