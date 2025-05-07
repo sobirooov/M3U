@@ -2,21 +2,27 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.m3u.material.components.Button
 
 
 @Composable
 fun Video() {
-    val youtubeVideo = "<iframe style=\"overflow:hidden;height:100%;width:100%\" height=\"100%\" width=\"100%\" src=\"https://www.youtube.com/embed/IDHKlktqts8?si=W43MkGWWZF-GmGPX\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>";
+    val youtubeVideo = "<iframe style=\"overflow:hidden;height:100%;width:100%\" height=\"100%\" width=\"100%\" src=\"https://www.youtube.com/embed/IDHKlktqts8?si=W43MkGWWZF-GmGPX&autoplay=1\" title=\"Playlist kiritish\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>";
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -25,6 +31,8 @@ fun Video() {
             horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
+
+        var count by remember { mutableStateOf(0) }
 
         AndroidView(
             modifier = Modifier
@@ -37,22 +45,27 @@ fun Video() {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
-                    // JavaScript ni yoqish (YouTube pleeri uchun zarur)
                     settings.javaScriptEnabled = true
-                    // WebView ichidagi navigatsiyani boshqarish
+                    settings.domStorageEnabled = true
+                    settings.mediaPlaybackRequiresUserGesture = false
                     webViewClient = WebViewClient()
+                    var myCount = count;
 
-                    // Video linkini yuklash
                     loadData(youtubeVideo, "text/html" , "UTF-8")
                 }
             },
             update = { webView ->
-                // Agar videoEmbedUrl o'zgarsa, WebView ni yangilash
-                // Bu recompositionda URL o'zgarganda chaqiriladi
+                var myCount = count;
                 webView.loadData(youtubeVideo, "text/html" , "UTF-8")
             }
         )
 
-        Text(text = "Активация учун кулланма:")
+        Row {
+             Text(text = "Активация учун кулланма:")
+             Button(
+                 onClick = {count++},
+                 text = "Кайта Куриш"
+             )
+        }
     }
 }
