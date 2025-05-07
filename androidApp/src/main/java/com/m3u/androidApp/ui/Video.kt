@@ -21,7 +21,7 @@ fun Video() {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .padding(16.dp),
+            .padding(0.dp),
             horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
@@ -53,6 +53,6 @@ fun Video() {
             }
         )
 
-        Text(text = "Activasiya uchun qo'llanma:")
+        Text(text = "Активация учун кулланма:")
     }
 }

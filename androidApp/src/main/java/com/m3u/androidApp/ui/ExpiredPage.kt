@@ -66,21 +66,43 @@ fun ExpiredPage(message: String, androidId: String) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Row {
+                if (isLandscape) {
+                    Row (
+                        modifier = Modifier
+                            .padding(8.dp)
+                    ) {
+                        // Generate QR code with the link
+                        val qrCodeBitmap = generateQrCodeBitmap("https://t.me/ipxtvbot?start=$androidId")
+
+                        // Display the QR code if it's successfully generated
+                        qrCodeBitmap?.let  {
+                            Image(
+                                bitmap = it.asImageBitmap(),
+                                contentDescription = "QR Code",
+                                modifier = Modifier.size(200.dp) // Adjust size as needed
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Video()
+                    }
+                } else {
+
                     // Generate QR code with the link
                     val qrCodeBitmap = generateQrCodeBitmap("https://t.me/ipxtvbot?start=$androidId")
 
                     // Display the QR code if it's successfully generated
-                    qrCodeBitmap?.let {
+                    qrCodeBitmap?.let  {
                         Image(
                             bitmap = it.asImageBitmap(),
                             contentDescription = "QR Code",
                             modifier = Modifier.size(200.dp) // Adjust size as needed
                         )
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(16.dp))
                     Video()
+
                 }
+
 
                 // Display the Android ID prominently
                 Text(
